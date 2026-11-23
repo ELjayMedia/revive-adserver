@@ -12,7 +12,7 @@ require_once LIB_PATH . '/Plugin/Component.php';
 require_once MAX_PATH . '/lib/OX/Admin/UI/Hooks.php';
 
 /**
- * Adds the EljayMedia stylesheet to every admin page.
+ * Adds the EljayMedia stylesheet (and a tiny tidy-up script) to every admin page.
  *
  * Everything lives inside this plugin, so upgrading Revive (which replaces
  * core files) does not remove the theme as long as the plugins folders are
@@ -20,7 +20,7 @@ require_once MAX_PATH . '/lib/OX/Admin/UI/Hooks.php';
  */
 class Plugins_Admin_EmAdminTheme_EmAdminTheme extends OX_Component
 {
-    public const VERSION = '1.0.0';
+    public const VERSION = '1.1.0';
 
     public function registerUiListeners()
     {
@@ -33,7 +33,12 @@ class Plugins_Admin_EmAdminTheme_EmAdminTheme extends OX_Component
             return;
         }
 
-        $url = MAX::constructURL(MAX_URL_ADMIN, 'plugins/emAdminTheme/css/eljaymedia.css') . '?v=' . self::VERSION;
-        $GLOBALS['_MAX']['ADMIN_UI']->registerStylesheetFile($url);
+        $oUI = $GLOBALS['_MAX']['ADMIN_UI'];
+        $base = MAX::constructURL(MAX_URL_ADMIN, 'plugins/emAdminTheme/');
+        $oUI->registerStylesheetFile($base . 'css/eljaymedia.css?v=' . self::VERSION);
+
+        if (is_callable([$oUI, 'registerJSFile'])) {
+            $oUI->registerJSFile($base . 'js/eljaymedia.js?v=' . self::VERSION);
+        }
     }
 }
