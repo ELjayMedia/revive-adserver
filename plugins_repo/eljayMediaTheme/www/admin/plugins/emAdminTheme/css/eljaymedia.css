@@ -1,22 +1,29 @@
 /*
- * EljayMedia Admin Theme for Revive Adserver
- * ------------------------------------------
+ * EljayMedia Admin Theme for Revive Adserver: Swiss edition
+ * ---------------------------------------------------------
  * A pure override layer loaded after Revive's own stylesheets by the
  * emAdminTheme plugin. Nothing in Revive core is edited, so upgrades
  * replace core CSS underneath and this file keeps applying on top.
  *
- * Design tokens: EljayMedia design system (magenta / black / white,
- * Poppins display, DM Sans text, 4px spacing, soft radii).
+ * Principles (International Typographic Style, in EljayMedia colours):
+ *  - One grid: 8px rhythm, flush-left, ragged-right text.
+ *  - Structure comes from rules and whitespace, not boxes or shadows.
+ *    Heavy 2px black rules open a section; 1px hairlines divide rows.
+ *  - Type does the hierarchy: big heavy Poppins titles, small uppercase
+ *    labels, DM Sans for everything else. Numbers are tabular.
+ *  - Black and white do the work; magenta is the single accent
+ *    (active state, primary action, focus of attention).
+ *  - Square structure, soft controls: containers are square; buttons
+ *    and inputs keep the brand's soft radii.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap");
 
 :root {
     --em-brand: #ed1568;
     --em-brand-strong: #c40e55;
     --em-brand-tint: #fde7ef;
     --em-brand-strong-dark: #ff4d8d;
-    --em-brand-tint-dark: #3a0a1c;
     --em-black: #000000;
     --em-white: #ffffff;
     --em-surface: #ffffff;
@@ -36,17 +43,31 @@
     --em-font-display: Poppins, "Arial Black", system-ui, sans-serif;
     --em-font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
+    /* 8px grid */
+    --em-1: 4px;
+    --em-2: 8px;
+    --em-3: 12px;
+    --em-4: 16px;
+    --em-6: 24px;
+    --em-8: 32px;
+    --em-12: 48px;
+    --em-16: 64px;
+
     --em-radius-sm: 6px;
     --em-radius-md: 12px;
-    --em-radius-lg: 24px;
-    --em-radius-pill: 9999px;
+
+    --em-rule: 2px solid var(--em-black);
+    --em-hairline: 1px solid var(--em-border);
 
     --em-header-h: 64px;
-    --em-nav-h: 52px;
-    --em-sidebar-w: 216px;
+    --em-nav-h: 48px;
+    --em-sidebar-w: 224px;
+    --em-gutter: 32px;
 }
 
-/* ---------- Base ---------- */
+/* ================================================================
+   Base
+   ================================================================ */
 
 body,
 body table, body td, body th,
@@ -58,14 +79,21 @@ body select, body textarea, body input, body button {
 
 body {
     background: var(--em-surface);
-    line-height: 1.45;
+    line-height: 20px;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 0;
 }
 
 a {
-    color: var(--em-brand-strong);
+    color: var(--em-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--em-border-strong);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
 }
 a:hover {
-    color: var(--em-black);
+    color: var(--em-brand-strong);
+    text-decoration-color: var(--em-brand-strong);
 }
 
 a:focus-visible,
@@ -80,9 +108,17 @@ textarea:focus-visible {
 h1, h2, h3, h4 {
     font-family: var(--em-font-display);
     color: var(--em-ink);
+    letter-spacing: -0.01em;
 }
 
-/* ---------- Header (black brand bar) ---------- */
+::selection {
+    background: var(--em-brand);
+    color: var(--em-black);
+}
+
+/* ================================================================
+   Header: black bar, logo flush to the grid's left edge
+   ================================================================ */
 
 #oaHeader {
     height: var(--em-header-h);
@@ -94,12 +130,12 @@ h1, h2, h3, h4 {
 #oaHeaderBranding.brandingName,
 #oaHeaderBranding.brandingCustom {
     top: 0;
-    left: 24px;
-    width: 180px;
+    left: var(--em-gutter);
+    width: 168px;
     height: var(--em-header-h);
     margin: 0;
     padding: 0;
-    background: url(../images/logo-white.png) left center / 180px auto no-repeat;
+    background: url(../images/logo-white.png) left center / 168px auto no-repeat;
     text-indent: -9999px;
     overflow: hidden;
     color: transparent;
@@ -110,16 +146,17 @@ h1, h2, h3, h4 {
 }
 
 #oaNavigationExtraTop {
-    padding: 0 24px 0 0;
+    padding: 0 var(--em-gutter) 0 0;
     height: var(--em-header-h);
     line-height: var(--em-header-h);
     color: var(--em-ink-muted-dark);
+    font-size: 13px;
 }
 #oaNavigationExtraTop.hasSearch {
-    padding-right: 320px;
+    padding-right: calc(var(--em-gutter) + 280px + var(--em-6));
 }
 #oaNavigationExtraTop li {
-    padding: 0 12px;
+    padding: 0 0 0 var(--em-6);
 }
 #oaNavigationExtraTop li.infoUser,
 #oaNavigationExtraTop li.buttonHelp,
@@ -129,19 +166,19 @@ h1, h2, h3, h4 {
 #oaNavigationExtraTop a {
     color: var(--em-white);
     font-weight: 700;
+    text-decoration: none;
 }
 #oaNavigationExtraTop a:hover {
     color: var(--em-brand-strong-dark);
-    text-decoration: none;
 }
 #oaNavigationExtraTop a:focus-visible {
     outline-color: var(--em-white);
 }
 
-/* Search */
+/* Search: a single hairline field, no box chrome */
 #oaSearch {
     top: 12px;
-    right: 24px;
+    right: var(--em-gutter);
     width: 280px;
     height: 40px;
     background: var(--em-raised-dark);
@@ -151,14 +188,20 @@ h1, h2, h3, h4 {
 }
 #oaSearch input.search {
     position: absolute;
-    left: 12px;
+    left: var(--em-3);
     top: 0;
     width: 220px;
+    min-height: 0;
     height: 38px;
+    padding: 0;
+    border: 0;
     line-height: 38px;
     color: var(--em-white);
     font-size: 14px;
     background: none;
+}
+#oaSearch input.search::placeholder {
+    color: var(--em-ink-muted-dark);
 }
 #oaSearch input.search:focus-visible {
     outline: none;
@@ -180,23 +223,26 @@ h1, h2, h3, h4 {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") center / 18px no-repeat;
 }
 
-/* ---------- Main navigation (tabs on black) ---------- */
+/* ================================================================
+   Main navigation: typographic tabs, magenta underline marks the
+   current section
+   ================================================================ */
 
 #oaNavigation {
     top: 0;
     height: var(--em-nav-h);
     background: var(--em-black);
+    border-top: 1px solid var(--em-border-dark);
     border-bottom: 0;
 }
 
 #oaNavigationTabs {
     top: 0;
-    left: 16px;
+    left: var(--em-gutter);
     height: var(--em-nav-h);
-    line-height: 40px;
+    line-height: var(--em-nav-h);
     display: flex;
-    gap: 4px;
-    align-items: flex-start;
+    gap: var(--em-8);
 }
 #oaNavigationTabs *,
 #oaNavigationTabs li,
@@ -205,7 +251,7 @@ h1, h2, h3, h4 {
 #oaNavigationTabs li div.right,
 #oaNavigationTabs li.first div.left,
 #oaNavigationTabs li.last div.right {
-    height: 40px;
+    height: var(--em-nav-h);
     background: none !important;
 }
 #oaNavigationTabs li {
@@ -216,58 +262,69 @@ h1, h2, h3, h4 {
 #oaNavigationTabs li.last span,
 #oaNavigationTabs li.last a {
     float: none;
+    box-sizing: border-box;
     margin: 0;
-    padding: 0 16px;
-    border-radius: var(--em-radius-md);
+    padding: 0;
     font-size: 14px;
     font-weight: 500;
-    color: var(--em-white) !important;
+    color: var(--em-ink-muted-dark) !important;
     background: none !important;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
 }
 #oaNavigationTabs li a:hover {
-    background: var(--em-raised-dark) !important;
-    text-decoration: none;
+    color: var(--em-white) !important;
 }
 #oaNavigationTabs li.active a,
 #oaNavigationTabs li.active span {
-    background: var(--em-brand-tint-dark) !important;
-    color: var(--em-brand-strong-dark) !important;
+    color: var(--em-white) !important;
     font-weight: 700;
+    border-bottom-color: var(--em-brand);
 }
 #oaNavigationTabs li a:focus-visible {
     outline-color: var(--em-white);
+    outline-offset: -2px;
 }
 
 /* Account switcher ("Working as") */
 #oaNavigationExtra {
-    top: 10px;
-    right: 24px;
+    top: 0;
+    right: var(--em-gutter);
+    height: var(--em-nav-h);
+    display: flex;
+    align-items: center;
     color: var(--em-ink-muted-dark);
     line-height: 20px;
 }
 #oaNavigationExtra a {
-    color: var(--em-brand-strong-dark);
+    color: var(--em-ink-muted-dark);
+    font-size: 12px;
     font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+#oaNavigationExtra a:hover {
+    color: var(--em-white);
 }
 #oaNavigationExtra .triggerContainer {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    gap: 8px;
+    gap: var(--em-2);
     max-width: 360px;
-    padding: 6px 12px;
-    background: var(--em-raised-dark);
-    border-radius: var(--em-radius-pill);
 }
 #oaNavigationExtra .switchTrigger {
     top: 0;
     height: 20px;
-    max-width: 200px;
+    max-width: 220px;
     color: var(--em-white);
     font-weight: 700;
 }
 
-/* ---------- Page frame ---------- */
+/* ================================================================
+   Page frame: one left gutter, sidebar column, content column
+   ================================================================ */
 
 #firstLevelContent,
 body.hasGradient #firstLevelContent {
@@ -276,111 +333,132 @@ body.hasGradient #firstLevelContent {
 }
 
 .hasGradient #secondLevelContent {
-    padding: 24px 32px 48px;
+    padding: var(--em-8) var(--em-gutter) var(--em-16);
 }
 .hasSidebar #secondLevelContent {
-    margin-left: calc(var(--em-sidebar-w) + 24px);
+    margin-left: calc(var(--em-gutter) + var(--em-sidebar-w) + var(--em-8));
     padding-left: 0;
 }
 
-/* ---------- Sidebar ---------- */
+/* ================================================================
+   Sidebar: a plain typographic index, hairline between groups,
+   a magenta bar marks where you are
+   ================================================================ */
 
 #secondLevelNavigation {
     width: var(--em-sidebar-w);
-    margin: 24px 0 0 16px;
+    margin: var(--em-8) 0 0 var(--em-gutter);
 }
 #secondLevelNavigation .navigation {
     width: var(--em-sidebar-w);
-    margin: 0 0 16px;
-    padding: 8px 0 0;
+    margin: 0 0 var(--em-4);
+    padding: var(--em-4) 0 0;
     background: none;
-    border-top: 1px solid var(--em-border);
+    border-top: var(--em-hairline);
 }
 #secondLevelNavigation .navigation.first {
-    border-top: 0;
-    padding-top: 0;
+    border-top: var(--em-rule);
 }
 #secondLevelNavigation .navigation li,
 #secondLevelNavigation .navigation li.active {
     background: none;
-    margin: 0 0 2px;
+    margin: 0;
 }
 #secondLevelNavigation .navigation li a,
 #secondLevelNavigation .navigation li.last a {
-    display: flex;
-    align-items: center;
-    min-height: 40px;
-    padding: 0 12px;
+    position: relative;
+    display: block;
+    padding: var(--em-2) 0 var(--em-2) var(--em-4);
     border: 0;
-    border-radius: var(--em-radius-md);
+    border-radius: 0;
     background: none;
     color: var(--em-ink);
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
-}
-#secondLevelNavigation .navigation li a:hover {
-    background: var(--em-surface-raised);
     text-decoration: none;
 }
-#secondLevelNavigation .navigation li.active > a {
-    background: var(--em-brand-tint);
+#secondLevelNavigation .navigation li a:hover {
     color: var(--em-brand-strong);
+}
+#secondLevelNavigation .navigation li.active > a,
+#secondLevelNavigation .navigation li.active a {
+    background: none;
+    color: var(--em-ink);
     font-weight: 700;
+}
+#secondLevelNavigation .navigation li.active > a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: var(--em-2);
+    bottom: var(--em-2);
+    width: 3px;
+    background: var(--em-brand);
 }
 #secondLevelNavigation .navigation li .top,
 #secondLevelNavigation .navigation li .bottom {
     display: none;
 }
-/* Sub-items */
+/* Sub-items: indented one grid step, smaller and muted */
 #secondLevelNavigation .navigation li.active ul,
 #secondLevelNavigation .navigation .navigation {
     width: auto;
-    margin: 4px 0 8px 12px;
-    padding: 0 0 0 8px;
-    border-top: 0;
-    border-left: 2px solid var(--em-brand-tint);
+    margin: 0 0 var(--em-2) var(--em-4);
+    padding: 0;
+    border: 0;
     background: none;
 }
 #secondLevelNavigation .navigation li.active ul li a {
-    min-height: 34px;
-    padding-left: 12px;
+    padding: 6px 0 6px var(--em-4);
     border: 0;
     background: none;
     color: var(--em-ink-muted);
+    font-size: 13px;
     font-weight: 500;
 }
-#secondLevelNavigation .navigation li.active ul li.active a {
-    background: none;
+#secondLevelNavigation .navigation li.active ul li a:hover {
     color: var(--em-brand-strong);
+}
+#secondLevelNavigation .navigation li.active ul li.active a {
+    color: var(--em-ink);
     font-weight: 700;
+}
+#secondLevelNavigation .navigation li.active ul li.active a::before {
+    top: 6px;
+    bottom: 6px;
 }
 
 /* Sidebar notifications */
 .notificationPlaceholder .panel {
-    border-radius: var(--em-radius-md);
+    border-radius: 0;
 }
 
-/* ---------- Page header & section tabs ---------- */
+/* ================================================================
+   Page header: eyebrow label + large title, set flush-left
+   ================================================================ */
 
 #thirdLevelHeader,
 #thirdLevelHeader.hasTabs {
     height: auto;
     min-height: 0;
     border: 0;
+    border-top: var(--em-rule);
     background: none;
-    padding: 0 0 8px;
+    padding: var(--em-4) 0 0;
 }
 #thirdLevelHeader .corner {
     display: none;
 }
-#thirdLevelHeader div.breadcrumb {
-    margin: 0;
-    padding: 0 0 16px;
-    min-height: 48px;
-}
+#thirdLevelHeader div.breadcrumb,
 #thirdLevelHeader div.breadcrumb.hasIcon {
-    padding-left: 60px;
+    margin: 0;
+    padding: 0 0 var(--em-6);
+    min-height: 0;
+    background-image: none !important;
+}
+#thirdLevelHeader div.breadcrumb .titleIcon {
+    display: none;
 }
 #thirdLevelHeader div.breadcrumb h3,
 #thirdLevelHeader div.breadcrumb h3.noBreadcrumb {
@@ -389,35 +467,69 @@ body.hasGradient #firstLevelContent {
     padding-top: 0;
     margin: 0;
     font-family: var(--em-font-display);
-    font-size: 28px;
-    line-height: 34px;
+    font-size: 40px;
+    line-height: 44px;
     font-weight: 800;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     color: var(--em-ink);
 }
 #thirdLevelHeader div.breadcrumb h3 .label {
     display: block;
+    margin-bottom: var(--em-2);
     font-family: var(--em-font-sans);
     font-size: 12px;
     line-height: 16px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--em-brand-strong);
 }
-#thirdLevelHeader .entityLinks,
-#thirdLevelHeader .entityList {
+#thirdLevelHeader div.breadcrumb h3 span.target {
+    display: block;
+    margin-top: var(--em-2);
+    font-family: var(--em-font-sans);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
     color: var(--em-ink-muted);
 }
 
+/* Breadcrumb trail: small, muted, separated by slashes */
+#thirdLevelHeader .entityLinks {
+    display: block;
+    margin-top: var(--em-3);
+    font-size: 13px;
+    color: var(--em-ink-muted);
+}
+#thirdLevelHeader .entityLinks .ent,
+#thirdLevelHeader .entityList .ent {
+    padding-left: 0;
+    background-image: none !important;
+    color: var(--em-ink-muted);
+}
+#thirdLevelHeader .entityLinks a.ent:hover {
+    color: var(--em-brand-strong);
+}
+#thirdLevelHeader span.sep {
+    font-size: 0;
+    padding: 0 var(--em-2);
+}
+#thirdLevelHeader span.sep::after {
+    content: "/";
+    font-size: 13px;
+    color: var(--em-border-strong);
+}
+
+/* Section tabs: same typographic language as the main navigation */
 #thirdLevelNavigation {
     position: relative;
     margin: 0;
-    border-bottom: 1px solid var(--em-border);
+    border-bottom: var(--em-hairline);
 }
 #thirdLevelNavigation .navigation {
     display: flex;
-    gap: 24px;
+    gap: var(--em-8);
     height: auto;
     line-height: 20px;
     overflow-x: auto;
@@ -436,15 +548,15 @@ body.hasGradient #firstLevelContent {
 #thirdLevelNavigation li.last span,
 #thirdLevelNavigation li.last a {
     float: none;
-    padding: 12px 0;
+    padding: var(--em-3) 0;
     margin-bottom: -1px;
     font-size: 14px;
     color: var(--em-ink-muted);
+    text-decoration: none;
     border-bottom: 3px solid transparent;
 }
 #thirdLevelNavigation li a:hover {
     color: var(--em-ink);
-    text-decoration: none;
 }
 #thirdLevelNavigation li.active span,
 #thirdLevelNavigation li.active a {
@@ -454,62 +566,112 @@ body.hasGradient #firstLevelContent {
 }
 
 #thirdLevelContent {
-    padding: 24px 0 0;
+    padding: var(--em-8) 0 0;
     border: 0;
 }
 
 /* Actions / shortcuts toolbar */
 #thirdLevelTools {
     min-height: 0;
-    margin-bottom: 16px;
+    margin-bottom: var(--em-4);
 }
-#thirdLevelTools a.buttonLink,
-.linksContainer .dropDown > span {
-    border-radius: var(--em-radius-md);
+#thirdLevelTools a.buttonLink {
+    text-decoration: none;
+    font-weight: 700;
 }
 
-/* ---------- Tables ---------- */
+/* ================================================================
+   Tables: no boxes. A heavy rule opens the table, hairlines
+   divide rows, numbers line up.
+   ================================================================ */
 
 .tableWrapper {
-    border: 1px solid var(--em-border);
-    border-radius: var(--em-radius-lg);
-    overflow: hidden;
+    border: 0;
+    border-radius: 0;
     background: var(--em-surface);
 }
 .tableWrapper .tableHeader {
-    background: var(--em-surface-raised);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--em-4);
+    padding: 0 0 var(--em-4);
+    background: none;
     border: 0;
-    padding: 8px 16px;
 }
-.tableWrapper .tableHeader .corner {
+.tableWrapper .tableHeader .corner,
+.tableWrapper .tableHeader .clear {
     display: none;
 }
+.tableWrapper .tableActions,
+.tableWrapper .tableFilters {
+    margin: 0;
+}
+.tableWrapper .tableActions li,
+.tableWrapper .tableFilters li {
+    margin-right: var(--em-6);
+}
+
+/* Toolbar actions read as text buttons with a + mark, no clip-art */
 .tableWrapper .tableActions li a,
 .tableWrapper .tableActions li span {
+    padding-left: 0;
+    background-image: none !important;
     font-weight: 700;
+    text-decoration: none;
 }
+.tableWrapper .tableActions li a {
+    color: var(--em-brand-strong);
+}
+.tableWrapper .tableActions li a:hover {
+    color: var(--em-black);
+}
+.tableWrapper .tableActions li a[class*="Add"]::before {
+    content: "+";
+    display: inline-block;
+    margin-right: var(--em-2);
+    font-family: var(--em-font-display);
+    font-size: 18px;
+    line-height: 1;
+}
+.tableWrapper .tableActions li.inactive a,
+.tableWrapper .tableActions li span[class*="Disabled"] {
+    color: var(--em-border-strong);
+}
+
 .tableWrapper table {
     border-collapse: collapse;
+    border-top: var(--em-rule);
 }
 .tableWrapper table th {
-    padding: 12px 16px;
+    padding: var(--em-3) var(--em-4) var(--em-3) 0;
+    vertical-align: middle !important;
     background: var(--em-surface);
-    border-bottom: 1px solid var(--em-border);
+    border-bottom: var(--em-hairline);
     color: var(--em-ink-muted);
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 16px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     text-align: left;
 }
 .tableWrapper table th a,
 .tableWrapper table th span {
     color: var(--em-ink-muted);
+    text-decoration: none;
+}
+.tableWrapper table th.sortUp a,
+.tableWrapper table th.sortDown a,
+.tableWrapper table th.sortUp span,
+.tableWrapper table th.sortDown span {
+    color: var(--em-ink);
 }
 .tableWrapper table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--em-border);
+    padding: var(--em-3) var(--em-4) var(--em-3) 0;
+    border-bottom: var(--em-hairline);
     background: var(--em-surface);
+    vertical-align: middle;
 }
 .tableWrapper table tr:hover td {
     background: var(--em-surface-raised);
@@ -519,20 +681,57 @@ body.hasGradient #firstLevelContent {
     background: var(--em-brand-tint);
 }
 .tableWrapper table td a {
+    color: var(--em-ink);
     font-weight: 700;
+    text-decoration: none;
+}
+.tableWrapper table td a:hover {
+    color: var(--em-brand-strong);
+    text-decoration: underline;
+}
+/* Strip the legacy entity clip-art; the column tells you the type */
+.tableWrapper table .inlineIcon {
+    padding-left: 0;
+    background-image: none !important;
 }
 .tableWrapper table .alignRight,
-.tableWrapper table td.alignRight {
+.tableWrapper table td.alignRight,
+.tableWrapper table td {
     font-variant-numeric: tabular-nums;
+}
+.tableWrapper table .alignRight,
+.tableWrapper table th.last,
+.tableWrapper table td.last {
+    padding-right: 0;
+}
+.tableWrapper table .toggleAll,
+.tableWrapper table .toggleSelection {
+    width: 32px;
+}
+
+/* Row actions (Edit, Delete…) appear as small muted text */
+.tableWrapper table .rowActions li a {
+    padding-left: 0;
+    background-image: none !important;
+    color: var(--em-ink-muted);
+    font-weight: 500;
+    font-size: 13px;
+}
+.tableWrapper table .rowActions li a:hover {
+    color: var(--em-brand-strong);
 }
 
 /* Generic legacy tables (stats, settings) */
 table.table,
 table.statsTable {
     border-collapse: collapse;
+    border-top: var(--em-rule);
 }
 
-/* ---------- Forms ---------- */
+/* ================================================================
+   Forms: each section opens with a heavy rule and an uppercase
+   label; label column and field column on the grid
+   ================================================================ */
 
 input[type="text"],
 input[type="password"],
@@ -544,15 +743,24 @@ input.flat,
 select,
 textarea {
     box-sizing: border-box;
-    min-height: 36px;
-    padding: 6px 10px;
+    min-height: 40px;
+    padding: var(--em-2) var(--em-3);
     border: 1px solid var(--em-border-strong);
     border-radius: var(--em-radius-sm);
     background-color: var(--em-surface);
     color: var(--em-ink);
+    font-size: 14px;
+}
+input[type="text"]:hover,
+input[type="password"]:hover,
+input.flat:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--em-black);
 }
 textarea {
-    min-height: 80px;
+    min-height: 96px;
+    line-height: 20px;
 }
 input[type="checkbox"],
 input[type="radio"] {
@@ -561,12 +769,84 @@ input[type="radio"] {
     height: 16px;
 }
 
+/* Section header row: rule + label instead of spacer images */
+table.section {
+    margin-bottom: var(--em-8);
+    border-top: var(--em-rule);
+}
+table.section img[src*="break"],
+table.section img[src*="spacer"] {
+    display: none;
+}
+table.section > tbody > tr:first-child > td {
+    padding-top: var(--em-3);
+    height: auto !important;
+}
+table.section > tbody > tr:first-child b {
+    font-family: var(--em-font-sans);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--em-ink);
+}
+table.section > tbody > tr:first-child img {
+    display: none;
+}
+table.section td {
+    padding-top: var(--em-1);
+    padding-bottom: var(--em-1);
+}
+table.section td[height="10"],
+table.section td[height="25"] {
+    height: auto !important;
+}
+table.section tr:nth-child(3) td[height="10"] {
+    height: var(--em-2) !important;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+}
+table.section > tbody > tr:nth-child(2) {
+    display: none;
+}
+table.section td[width="170"] {
+    width: 200px;
+    min-width: 200px;
+    padding-right: var(--em-6);
+    color: var(--em-ink);
+    font-weight: 500;
+    vertical-align: top;
+    padding-top: 14px;
+}
+table.section td[width="30"] {
+    width: 0;
+    padding: 0;
+}
+table.section tr.spacer td {
+    height: var(--em-2) !important;
+    line-height: 0;
+    font-size: 0;
+}
+table.section font[color="red"],
+.controls span[style*="color: red"] {
+    color: var(--em-brand-strong) !important;
+}
+label.error,
+.errormessage,
+.panel.error p {
+    color: var(--em-danger);
+    font-weight: 500;
+}
+
+/* Buttons: magenta primary, black-outline secondary */
 input[type="submit"],
 input[type="button"],
 form button[type="submit"],
 .button {
-    min-height: 40px;
-    padding: 0 20px;
+    min-height: 44px;
+    padding: 0 var(--em-6);
     border: 0;
     border-radius: var(--em-radius-md);
     background: var(--em-brand-strong);
@@ -574,6 +854,7 @@ form button[type="submit"],
     font-family: var(--em-font-sans);
     font-size: 14px;
     font-weight: 700;
+    letter-spacing: 0.01em;
     cursor: pointer;
 }
 input[type="submit"]:hover,
@@ -582,33 +863,70 @@ form button[type="submit"]:hover,
 .button:hover {
     background: var(--em-black);
 }
-input[type="button"].secondary,
-input[type="reset"] {
+input[type="button"],
+input[type="reset"],
+input[type="button"].secondary {
     background: var(--em-surface);
     color: var(--em-black);
     box-shadow: inset 0 0 0 1px var(--em-black);
 }
-
-/* Revive form sections */
-form .section,
-fieldset {
-    border-color: var(--em-border);
-    border-radius: var(--em-radius-lg);
-}
-form .section h3,
-form h3,
-.formSectionHeader {
-    font-family: var(--em-font-display);
-    font-size: 20px;
-    line-height: 28px;
-    font-weight: 700;
+input[type="button"]:hover,
+input[type="reset"]:hover {
+    background: var(--em-black);
+    color: var(--em-white);
 }
 
-/* ---------- Messages ---------- */
+/* Form controls row: sits on a hairline, buttons flush-left */
+.controls {
+    margin-top: var(--em-8);
+    padding-top: var(--em-6);
+    border-top: var(--em-hairline);
+}
 
-.message .panel,
-.messagePlaceholder .panel {
-    border-radius: var(--em-radius-md);
+/* ================================================================
+   Messages: a coloured top rule + bold word, never colour alone
+   ================================================================ */
+
+div.message div.panel,
+div.message div.confirm,
+div.message div.info,
+div.message div.warning,
+div.message div.error,
+div.localMessage div.panel,
+div.formMessage div.panel {
+    width: auto;
+    max-width: 720px;
+    margin: 0 0 var(--em-6);
+    padding: var(--em-3) var(--em-4);
+    border: 0;
+    border-top: 2px solid var(--em-black);
+    border-radius: 0;
+    background: var(--em-surface-raised);
+    color: var(--em-ink);
+}
+div.message div.panel p {
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: var(--em-ink);
+}
+div.message div.panel a {
+    color: var(--em-ink);
+}
+div.message div.panel div.icon {
+    display: none;
+}
+div.message div.error {
+    border-top-color: var(--em-danger);
+}
+div.message div.confirm {
+    border-top-color: var(--em-success);
+}
+div.message div.warning {
+    border-top-color: var(--em-warning);
+}
+div.message div.info {
+    border-top-color: var(--em-info);
 }
 .message .panel .topleft,
 .message .panel .topright,
@@ -616,98 +934,149 @@ form h3,
 .message .panel .bottomright {
     display: none;
 }
-.errormessage,
-.panel.error p {
-    color: var(--em-danger);
+
+/* ================================================================
+   Sign-in: a poster. Black field with the brand triangle, the form
+   set on the same grid.
+   ================================================================ */
+
+body:has(form.login) {
+    background: var(--em-surface);
+}
+body:has(form.login) #oaNavigation {
+    display: none;
+}
+body:has(form.login) #secondLevelContent {
+    margin: 0;
+    padding: 0;
 }
 
-/* ---------- Sign-in page ---------- */
-
 form.login {
-    max-width: 440px;
-    margin: 64px auto;
-    padding: 40px;
-    border: 1px solid var(--em-border);
-    border-radius: var(--em-radius-lg);
-    background: var(--em-surface);
+    position: relative;
+    max-width: 960px;
+    margin: var(--em-16) var(--em-gutter);
+    padding: var(--em-8) 0 0;
+    border-top: var(--em-rule);
+}
+form.login::before {
+    content: "ad console";
+    display: block;
+    margin-bottom: var(--em-12);
+    font-family: var(--em-font-display);
+    font-size: 64px;
+    line-height: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--em-ink);
+}
+form.login::after {
+    content: "";
+    position: absolute;
+    top: var(--em-8);
+    right: 0;
+    width: 120px;
+    height: 132px;
+    background: var(--em-brand);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+form.login > table {
+    max-width: 480px;
+}
+form.login > table > tbody > tr > td:first-child + td:last-child {
+    display: block;
 }
 form.login img[src*="login-welcome"],
 form.login img.break {
     display: none;
 }
+form.login > table {
+    width: 100%;
+}
+form.login > table > tbody > tr > td:first-child {
+    display: none;
+}
+form.login > table > tbody > tr > td + td {
+    width: 100%;
+}
 form.login .tab-s {
     display: block;
-    margin-bottom: 4px;
-    font-family: var(--em-font-display);
-    font-size: 28px;
-    line-height: 34px;
-    font-weight: 800;
-    color: var(--em-ink);
+    margin-bottom: var(--em-1);
+    font-family: var(--em-font-sans);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--em-brand-strong);
 }
 form.login .install {
     color: var(--em-ink-muted);
 }
 form.login table table {
     width: 100%;
-    margin-top: 24px;
+    margin-top: var(--em-6);
 }
 form.login table table tr {
     height: auto;
 }
 form.login table table td {
-    padding: 6px 0;
+    display: block;
+    padding: 0;
     font-weight: 700;
+}
+form.login table table td + td {
+    margin: var(--em-2) 0 var(--em-4);
 }
 form.login input.flat {
     width: 100%;
-    min-height: 44px;
+    min-height: 48px;
     font-size: 16px;
 }
 form.login input[type="submit"] {
     width: 100%;
-    min-height: 52px;
-    margin-top: 8px;
+    min-height: 56px;
     background: var(--em-brand);
+    color: var(--em-white);
     font-family: var(--em-font-display);
-    font-size: 19px;
+    font-size: 20px;
 }
 form.login input[type="submit"]:hover {
-    background: var(--em-brand-strong);
+    background: var(--em-black);
 }
 form.login a {
     display: inline-block;
-    margin-top: 16px;
+    margin-top: var(--em-4);
     font-weight: 700;
 }
 
-/* The sign-in page has no sidebar: centre the frame */
-body:has(form.login) #secondLevelContent {
-    margin: 0;
-}
-
-/* ---------- Narrow screens ---------- */
+/* ================================================================
+   Narrow screens
+   ================================================================ */
 
 @media (max-width: 900px) {
+    :root {
+        --em-gutter: 16px;
+    }
     body.hasInterface {
         min-width: 0;
     }
     #oaNavigationExtraTop.hasSearch {
-        padding-right: 24px;
+        padding-right: var(--em-gutter);
     }
-    #oaSearch {
+    #oaSearch,
+    #oaNavigationExtra,
+    #oaNavigationExtraTop li.infoUser {
         display: none;
     }
     #oaNavigationTabs {
-        right: 16px;
+        right: var(--em-gutter);
+        gap: var(--em-6);
         overflow-x: auto;
-    }
-    #oaNavigationExtra {
-        display: none;
     }
     #secondLevelNavigation {
         position: static;
         width: auto;
-        margin: 16px;
+        margin: var(--em-6) var(--em-gutter) 0;
     }
     #secondLevelNavigation .navigation {
         width: auto;
@@ -716,10 +1085,27 @@ body:has(form.login) #secondLevelContent {
         margin-left: 0;
     }
     .hasGradient #secondLevelContent {
-        padding: 16px;
+        padding: var(--em-6) var(--em-gutter) var(--em-12);
+    }
+    #thirdLevelHeader div.breadcrumb h3 {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    .tableWrapper {
+        overflow-x: auto;
+    }
+    .tableWrapper table {
+        min-width: 640px;
     }
     form.login {
-        margin: 24px 16px;
-        padding: 24px;
+        margin: var(--em-8) var(--em-gutter);
+    }
+    form.login::before {
+        font-size: 40px;
+        line-height: 44px;
+    }
+    form.login::after {
+        width: 64px;
+        height: 70px;
     }
 }

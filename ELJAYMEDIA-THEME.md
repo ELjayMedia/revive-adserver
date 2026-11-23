@@ -9,12 +9,25 @@ plugins_repo/eljayMediaTheme/
 └── www/admin/plugins/emAdminTheme/
     ├── emAdminTheme.class.php                   adds the stylesheet to every admin page
     ├── css/eljaymedia.css                       the theme (EljayMedia tokens, overrides only)
+    ├── js/eljaymedia.js                         two small markup tidy-ups CSS can't reach
     └── images/                                  official logo files
 ```
 
+## Design approach
+
+Swiss (International Typographic Style) layout in EljayMedia's colours and type:
+
+- **One grid.** 8px rhythm, a shared left gutter for the logo, menus, titles and tables, flush-left text.
+- **Rules, not boxes.** A heavy 2px black rule opens each section (page header, table, form section, sidebar). 1px hairlines divide rows. No shadows or gradients.
+- **Type does the hierarchy.** Large Poppins 800 page titles with a small uppercase magenta label above them. DM Sans for everything else, and numbers line up in columns.
+- **Magenta is the only accent.** It marks the current menu item and tab, the primary button, required fields and the sign-in triangle. Everything else is black and white.
+- **Square structure, soft controls.** Sections are square. Buttons and inputs keep the brand's rounded corners.
+- **No legacy clip-art.** The old entity icons are hidden in tables and page headers; the column or label already says what each item is.
+- **Status is never colour alone.** Messages carry a coloured top rule plus the word (Saved, Error…).
+
 ## How it works
 
-Revive calls the `beforePageHeader` UI hook before every admin page renders. The plugin listens for that hook and registers `css/eljaymedia.css`, which loads **after** Revive's own stylesheets and overrides them. This uses Revive's documented plugin API, so nothing in `lib/`, `www/admin/assets/` or the templates is modified.
+Revive calls the `beforePageHeader` UI hook before every admin page renders. The plugin listens for that hook and registers `css/eljaymedia.css`, which loads **after** Revive's own stylesheets and overrides them, plus `js/eljaymedia.js`, which removes a stray colon from edit-page titles. If the script ever fails, the page still works and just shows the colon. This uses Revive's documented plugin API, so nothing in `lib/`, `www/admin/assets/` or the templates is modified.
 
 ## Why upgrades won't remove it
 
