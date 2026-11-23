@@ -1,0 +1,725 @@
+/*
+ * EljayMedia Admin Theme for Revive Adserver
+ * ------------------------------------------
+ * A pure override layer loaded after Revive's own stylesheets by the
+ * emAdminTheme plugin. Nothing in Revive core is edited, so upgrades
+ * replace core CSS underneath and this file keeps applying on top.
+ *
+ * Design tokens: EljayMedia design system (magenta / black / white,
+ * Poppins display, DM Sans text, 4px spacing, soft radii).
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap");
+
+:root {
+    --em-brand: #ed1568;
+    --em-brand-strong: #c40e55;
+    --em-brand-tint: #fde7ef;
+    --em-brand-strong-dark: #ff4d8d;
+    --em-brand-tint-dark: #3a0a1c;
+    --em-black: #000000;
+    --em-white: #ffffff;
+    --em-surface: #ffffff;
+    --em-surface-raised: #f4f4f4;
+    --em-raised-dark: #141414;
+    --em-ink: #000000;
+    --em-ink-muted: #5c5c5c;
+    --em-ink-muted-dark: #a3a3a3;
+    --em-border: #e0e0e0;
+    --em-border-dark: #2a2a2a;
+    --em-border-strong: #8a8a8a;
+    --em-success: #0f766e;
+    --em-warning: #a15c00;
+    --em-danger: #b91c1c;
+    --em-info: #1d4ed8;
+
+    --em-font-display: Poppins, "Arial Black", system-ui, sans-serif;
+    --em-font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --em-radius-sm: 6px;
+    --em-radius-md: 12px;
+    --em-radius-lg: 24px;
+    --em-radius-pill: 9999px;
+
+    --em-header-h: 64px;
+    --em-nav-h: 52px;
+    --em-sidebar-w: 216px;
+}
+
+/* ---------- Base ---------- */
+
+body,
+body table, body td, body th,
+body select, body textarea, body input, body button {
+    font-family: var(--em-font-sans);
+    font-size: 14px;
+    color: var(--em-ink);
+}
+
+body {
+    background: var(--em-surface);
+    line-height: 1.45;
+}
+
+a {
+    color: var(--em-brand-strong);
+}
+a:hover {
+    color: var(--em-black);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--em-black);
+    outline-offset: 2px;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--em-font-display);
+    color: var(--em-ink);
+}
+
+/* ---------- Header (black brand bar) ---------- */
+
+#oaHeader {
+    height: var(--em-header-h);
+    background: var(--em-black) !important;
+}
+
+#oaHeaderBranding,
+#oaHeaderBranding.brandingAdServer,
+#oaHeaderBranding.brandingName,
+#oaHeaderBranding.brandingCustom {
+    top: 0;
+    left: 24px;
+    width: 180px;
+    height: var(--em-header-h);
+    margin: 0;
+    padding: 0;
+    background: url(../images/logo-white.png) left center / 180px auto no-repeat;
+    text-indent: -9999px;
+    overflow: hidden;
+    color: transparent;
+}
+#oaHeaderBranding img,
+#oaHeaderBranding div {
+    display: none;
+}
+
+#oaNavigationExtraTop {
+    padding: 0 24px 0 0;
+    height: var(--em-header-h);
+    line-height: var(--em-header-h);
+    color: var(--em-ink-muted-dark);
+}
+#oaNavigationExtraTop.hasSearch {
+    padding-right: 320px;
+}
+#oaNavigationExtraTop li {
+    padding: 0 12px;
+}
+#oaNavigationExtraTop li.infoUser,
+#oaNavigationExtraTop li.buttonHelp,
+#oaNavigationExtraTop li.buttonSupport {
+    border-right: 0;
+}
+#oaNavigationExtraTop a {
+    color: var(--em-white);
+    font-weight: 700;
+}
+#oaNavigationExtraTop a:hover {
+    color: var(--em-brand-strong-dark);
+    text-decoration: none;
+}
+#oaNavigationExtraTop a:focus-visible {
+    outline-color: var(--em-white);
+}
+
+/* Search */
+#oaSearch {
+    top: 12px;
+    right: 24px;
+    width: 280px;
+    height: 40px;
+    background: var(--em-raised-dark);
+    border: 1px solid var(--em-border-dark);
+    border-radius: var(--em-radius-sm);
+    box-sizing: border-box;
+}
+#oaSearch input.search {
+    position: absolute;
+    left: 12px;
+    top: 0;
+    width: 220px;
+    height: 38px;
+    line-height: 38px;
+    color: var(--em-white);
+    font-size: 14px;
+    background: none;
+}
+#oaSearch input.search:focus-visible {
+    outline: none;
+}
+#oaSearch:focus-within {
+    outline: 2px solid var(--em-white);
+    outline-offset: 2px;
+}
+#oaSearch input.submit,
+#oaSearch input.submit:hover,
+#oaSearch input.submit:focus {
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    top: 9px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") center / 18px no-repeat;
+}
+
+/* ---------- Main navigation (tabs on black) ---------- */
+
+#oaNavigation {
+    top: 0;
+    height: var(--em-nav-h);
+    background: var(--em-black);
+    border-bottom: 0;
+}
+
+#oaNavigationTabs {
+    top: 0;
+    left: 16px;
+    height: var(--em-nav-h);
+    line-height: 40px;
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+}
+#oaNavigationTabs *,
+#oaNavigationTabs li,
+#oaNavigationTabs li div,
+#oaNavigationTabs li div.left,
+#oaNavigationTabs li div.right,
+#oaNavigationTabs li.first div.left,
+#oaNavigationTabs li.last div.right {
+    height: 40px;
+    background: none !important;
+}
+#oaNavigationTabs li {
+    float: none;
+}
+#oaNavigationTabs li span,
+#oaNavigationTabs li a,
+#oaNavigationTabs li.last span,
+#oaNavigationTabs li.last a {
+    float: none;
+    margin: 0;
+    padding: 0 16px;
+    border-radius: var(--em-radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--em-white) !important;
+    background: none !important;
+}
+#oaNavigationTabs li a:hover {
+    background: var(--em-raised-dark) !important;
+    text-decoration: none;
+}
+#oaNavigationTabs li.active a,
+#oaNavigationTabs li.active span {
+    background: var(--em-brand-tint-dark) !important;
+    color: var(--em-brand-strong-dark) !important;
+    font-weight: 700;
+}
+#oaNavigationTabs li a:focus-visible {
+    outline-color: var(--em-white);
+}
+
+/* Account switcher ("Working as") */
+#oaNavigationExtra {
+    top: 10px;
+    right: 24px;
+    color: var(--em-ink-muted-dark);
+    line-height: 20px;
+}
+#oaNavigationExtra a {
+    color: var(--em-brand-strong-dark);
+    font-weight: 700;
+}
+#oaNavigationExtra .triggerContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+    max-width: 360px;
+    padding: 6px 12px;
+    background: var(--em-raised-dark);
+    border-radius: var(--em-radius-pill);
+}
+#oaNavigationExtra .switchTrigger {
+    top: 0;
+    height: 20px;
+    max-width: 200px;
+    color: var(--em-white);
+    font-weight: 700;
+}
+
+/* ---------- Page frame ---------- */
+
+#firstLevelContent,
+body.hasGradient #firstLevelContent {
+    margin-top: 0;
+    background: var(--em-surface);
+}
+
+.hasGradient #secondLevelContent {
+    padding: 24px 32px 48px;
+}
+.hasSidebar #secondLevelContent {
+    margin-left: calc(var(--em-sidebar-w) + 24px);
+    padding-left: 0;
+}
+
+/* ---------- Sidebar ---------- */
+
+#secondLevelNavigation {
+    width: var(--em-sidebar-w);
+    margin: 24px 0 0 16px;
+}
+#secondLevelNavigation .navigation {
+    width: var(--em-sidebar-w);
+    margin: 0 0 16px;
+    padding: 8px 0 0;
+    background: none;
+    border-top: 1px solid var(--em-border);
+}
+#secondLevelNavigation .navigation.first {
+    border-top: 0;
+    padding-top: 0;
+}
+#secondLevelNavigation .navigation li,
+#secondLevelNavigation .navigation li.active {
+    background: none;
+    margin: 0 0 2px;
+}
+#secondLevelNavigation .navigation li a,
+#secondLevelNavigation .navigation li.last a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: var(--em-radius-md);
+    background: none;
+    color: var(--em-ink);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+#secondLevelNavigation .navigation li a:hover {
+    background: var(--em-surface-raised);
+    text-decoration: none;
+}
+#secondLevelNavigation .navigation li.active > a {
+    background: var(--em-brand-tint);
+    color: var(--em-brand-strong);
+    font-weight: 700;
+}
+#secondLevelNavigation .navigation li .top,
+#secondLevelNavigation .navigation li .bottom {
+    display: none;
+}
+/* Sub-items */
+#secondLevelNavigation .navigation li.active ul,
+#secondLevelNavigation .navigation .navigation {
+    width: auto;
+    margin: 4px 0 8px 12px;
+    padding: 0 0 0 8px;
+    border-top: 0;
+    border-left: 2px solid var(--em-brand-tint);
+    background: none;
+}
+#secondLevelNavigation .navigation li.active ul li a {
+    min-height: 34px;
+    padding-left: 12px;
+    border: 0;
+    background: none;
+    color: var(--em-ink-muted);
+    font-weight: 500;
+}
+#secondLevelNavigation .navigation li.active ul li.active a {
+    background: none;
+    color: var(--em-brand-strong);
+    font-weight: 700;
+}
+
+/* Sidebar notifications */
+.notificationPlaceholder .panel {
+    border-radius: var(--em-radius-md);
+}
+
+/* ---------- Page header & section tabs ---------- */
+
+#thirdLevelHeader,
+#thirdLevelHeader.hasTabs {
+    height: auto;
+    min-height: 0;
+    border: 0;
+    background: none;
+    padding: 0 0 8px;
+}
+#thirdLevelHeader .corner {
+    display: none;
+}
+#thirdLevelHeader div.breadcrumb {
+    margin: 0;
+    padding: 0 0 16px;
+    min-height: 48px;
+}
+#thirdLevelHeader div.breadcrumb.hasIcon {
+    padding-left: 60px;
+}
+#thirdLevelHeader div.breadcrumb h3,
+#thirdLevelHeader div.breadcrumb h3.noBreadcrumb {
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+    margin: 0;
+    font-family: var(--em-font-display);
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--em-ink);
+}
+#thirdLevelHeader div.breadcrumb h3 .label {
+    display: block;
+    font-family: var(--em-font-sans);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--em-brand-strong);
+}
+#thirdLevelHeader .entityLinks,
+#thirdLevelHeader .entityList {
+    color: var(--em-ink-muted);
+}
+
+#thirdLevelNavigation {
+    position: relative;
+    margin: 0;
+    border-bottom: 1px solid var(--em-border);
+}
+#thirdLevelNavigation .navigation {
+    display: flex;
+    gap: 24px;
+    height: auto;
+    line-height: 20px;
+    overflow-x: auto;
+}
+#thirdLevelNavigation li,
+#thirdLevelNavigation li div,
+#thirdLevelNavigation li div.left,
+#thirdLevelNavigation li div.right,
+#thirdLevelNavigation li.first div.left,
+#thirdLevelNavigation li.last div.right {
+    float: none;
+    background: none !important;
+}
+#thirdLevelNavigation li span,
+#thirdLevelNavigation li a,
+#thirdLevelNavigation li.last span,
+#thirdLevelNavigation li.last a {
+    float: none;
+    padding: 12px 0;
+    margin-bottom: -1px;
+    font-size: 14px;
+    color: var(--em-ink-muted);
+    border-bottom: 3px solid transparent;
+}
+#thirdLevelNavigation li a:hover {
+    color: var(--em-ink);
+    text-decoration: none;
+}
+#thirdLevelNavigation li.active span,
+#thirdLevelNavigation li.active a {
+    color: var(--em-ink);
+    font-weight: 700;
+    border-bottom-color: var(--em-brand);
+}
+
+#thirdLevelContent {
+    padding: 24px 0 0;
+    border: 0;
+}
+
+/* Actions / shortcuts toolbar */
+#thirdLevelTools {
+    min-height: 0;
+    margin-bottom: 16px;
+}
+#thirdLevelTools a.buttonLink,
+.linksContainer .dropDown > span {
+    border-radius: var(--em-radius-md);
+}
+
+/* ---------- Tables ---------- */
+
+.tableWrapper {
+    border: 1px solid var(--em-border);
+    border-radius: var(--em-radius-lg);
+    overflow: hidden;
+    background: var(--em-surface);
+}
+.tableWrapper .tableHeader {
+    background: var(--em-surface-raised);
+    border: 0;
+    padding: 8px 16px;
+}
+.tableWrapper .tableHeader .corner {
+    display: none;
+}
+.tableWrapper .tableActions li a,
+.tableWrapper .tableActions li span {
+    font-weight: 700;
+}
+.tableWrapper table {
+    border-collapse: collapse;
+}
+.tableWrapper table th {
+    padding: 12px 16px;
+    background: var(--em-surface);
+    border-bottom: 1px solid var(--em-border);
+    color: var(--em-ink-muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: left;
+}
+.tableWrapper table th a,
+.tableWrapper table th span {
+    color: var(--em-ink-muted);
+}
+.tableWrapper table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--em-border);
+    background: var(--em-surface);
+}
+.tableWrapper table tr:hover td {
+    background: var(--em-surface-raised);
+}
+.tableWrapper table tr.selected td,
+.tableWrapper table tr.hilite td {
+    background: var(--em-brand-tint);
+}
+.tableWrapper table td a {
+    font-weight: 700;
+}
+.tableWrapper table .alignRight,
+.tableWrapper table td.alignRight {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Generic legacy tables (stats, settings) */
+table.table,
+table.statsTable {
+    border-collapse: collapse;
+}
+
+/* ---------- Forms ---------- */
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="search"],
+input.flat,
+select,
+textarea {
+    box-sizing: border-box;
+    min-height: 36px;
+    padding: 6px 10px;
+    border: 1px solid var(--em-border-strong);
+    border-radius: var(--em-radius-sm);
+    background-color: var(--em-surface);
+    color: var(--em-ink);
+}
+textarea {
+    min-height: 80px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--em-brand-strong);
+    width: 16px;
+    height: 16px;
+}
+
+input[type="submit"],
+input[type="button"],
+form button[type="submit"],
+.button {
+    min-height: 40px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: var(--em-radius-md);
+    background: var(--em-brand-strong);
+    color: var(--em-white);
+    font-family: var(--em-font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+input[type="submit"]:hover,
+input[type="button"]:hover,
+form button[type="submit"]:hover,
+.button:hover {
+    background: var(--em-black);
+}
+input[type="button"].secondary,
+input[type="reset"] {
+    background: var(--em-surface);
+    color: var(--em-black);
+    box-shadow: inset 0 0 0 1px var(--em-black);
+}
+
+/* Revive form sections */
+form .section,
+fieldset {
+    border-color: var(--em-border);
+    border-radius: var(--em-radius-lg);
+}
+form .section h3,
+form h3,
+.formSectionHeader {
+    font-family: var(--em-font-display);
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+}
+
+/* ---------- Messages ---------- */
+
+.message .panel,
+.messagePlaceholder .panel {
+    border-radius: var(--em-radius-md);
+}
+.message .panel .topleft,
+.message .panel .topright,
+.message .panel .bottomleft,
+.message .panel .bottomright {
+    display: none;
+}
+.errormessage,
+.panel.error p {
+    color: var(--em-danger);
+}
+
+/* ---------- Sign-in page ---------- */
+
+form.login {
+    max-width: 440px;
+    margin: 64px auto;
+    padding: 40px;
+    border: 1px solid var(--em-border);
+    border-radius: var(--em-radius-lg);
+    background: var(--em-surface);
+}
+form.login img[src*="login-welcome"],
+form.login img.break {
+    display: none;
+}
+form.login .tab-s {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--em-font-display);
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 800;
+    color: var(--em-ink);
+}
+form.login .install {
+    color: var(--em-ink-muted);
+}
+form.login table table {
+    width: 100%;
+    margin-top: 24px;
+}
+form.login table table tr {
+    height: auto;
+}
+form.login table table td {
+    padding: 6px 0;
+    font-weight: 700;
+}
+form.login input.flat {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+}
+form.login input[type="submit"] {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 8px;
+    background: var(--em-brand);
+    font-family: var(--em-font-display);
+    font-size: 19px;
+}
+form.login input[type="submit"]:hover {
+    background: var(--em-brand-strong);
+}
+form.login a {
+    display: inline-block;
+    margin-top: 16px;
+    font-weight: 700;
+}
+
+/* The sign-in page has no sidebar: centre the frame */
+body:has(form.login) #secondLevelContent {
+    margin: 0;
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 900px) {
+    body.hasInterface {
+        min-width: 0;
+    }
+    #oaNavigationExtraTop.hasSearch {
+        padding-right: 24px;
+    }
+    #oaSearch {
+        display: none;
+    }
+    #oaNavigationTabs {
+        right: 16px;
+        overflow-x: auto;
+    }
+    #oaNavigationExtra {
+        display: none;
+    }
+    #secondLevelNavigation {
+        position: static;
+        width: auto;
+        margin: 16px;
+    }
+    #secondLevelNavigation .navigation {
+        width: auto;
+    }
+    .hasSidebar #secondLevelContent {
+        margin-left: 0;
+    }
+    .hasGradient #secondLevelContent {
+        padding: 16px;
+    }
+    form.login {
+        margin: 24px 16px;
+        padding: 24px;
+    }
+}

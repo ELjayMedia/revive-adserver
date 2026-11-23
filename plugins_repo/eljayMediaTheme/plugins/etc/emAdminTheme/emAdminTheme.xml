@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href=""?>
+
+<plugin>
+    <name>emAdminTheme</name>
+    <displayName>EljayMedia Admin Theme</displayName>
+    <creationDate>2026-11-23</creationDate>
+    <author>EljayMedia</author>
+    <authorEmail>noreply@eljaymedia.com</authorEmail>
+    <authorUrl>https://eljaymedia.com</authorUrl>
+    <license>LICENSE.txt</license>
+    <description>Loads the EljayMedia stylesheet on every admin page via the beforePageHeader UI hook.</description>
+    <version>1.0.0</version>
+    <oxversion>6.0.0</oxversion>
+    <extends>admin</extends>
+
+    <install>
+        <files>
+            <file path="{ADMINPATH}/">emAdminTheme.class.php</file>
+            <file path="{ADMINPATH}/css/">eljaymedia.css</file>
+            <file path="{ADMINPATH}/images/">logo-white.png</file>
+            <file path="{ADMINPATH}/images/">logo-black.png</file>
+            <file path="{ADMINPATH}/images/">app-icon.png</file>
+        </files>
+
+        <components>
+            <component>
+                <name>emAdminTheme</name>
+                <hook>registerUiListeners</hook>
+            </component>
+        </components>
+    </install>
+</plugin>
