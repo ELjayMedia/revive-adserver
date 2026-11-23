@@ -20,7 +20,7 @@ require_once MAX_PATH . '/lib/OX/Admin/UI/Hooks.php';
  */
 class Plugins_Admin_EmAdminTheme_EmAdminTheme extends OX_Component
 {
-    public const VERSION = '1.1.0';
+    public const VERSION = '1.2.0';
 
     public function registerUiListeners()
     {

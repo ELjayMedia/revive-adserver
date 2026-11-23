@@ -936,117 +936,160 @@ div.message div.info {
 }
 
 /* ================================================================
-   Sign-in: a poster. Black field with the brand triangle, the form
-   set on the same grid.
+   Sign-in: one contained card, centred in the window
    ================================================================ */
 
-body:has(form.login) {
-    background: var(--em-surface);
+body:has(form.login),
+body:has(form.login) #firstLevelContent {
+    background: var(--em-surface-raised);
 }
-body:has(form.login) #oaNavigation {
+body:has(form.login) #oaNavigation,
+body:has(form.login) #oaSearch {
     display: none;
 }
+body:has(form.login) #oaNavigationExtraTop.hasSearch {
+    padding-right: var(--em-gutter);
+}
+body:has(form.login) #firstLevelContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--em-header-h));
+    padding: var(--em-12) var(--em-4);
+    box-sizing: border-box;
+}
 body:has(form.login) #secondLevelContent {
+    width: 100%;
+    max-width: 420px;
     margin: 0;
     padding: 0;
 }
 
 form.login {
     position: relative;
-    max-width: 960px;
-    margin: var(--em-16) var(--em-gutter);
-    padding: var(--em-8) 0 0;
-    border-top: var(--em-rule);
+    margin: 0;
+    padding: var(--em-12) var(--em-8) var(--em-8);
+    background: var(--em-surface);
+    border: var(--em-hairline);
+    border-top: 4px solid var(--em-black);
 }
+/* Brand mark: the play-triangle, small, set on the card's grid */
 form.login::before {
-    content: "ad console";
-    display: block;
-    margin-bottom: var(--em-12);
-    font-family: var(--em-font-display);
-    font-size: 64px;
-    line-height: 64px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--em-ink);
-}
-form.login::after {
     content: "";
-    position: absolute;
-    top: var(--em-8);
-    right: 0;
-    width: 120px;
-    height: 132px;
+    display: block;
+    width: 22px;
+    height: 24px;
+    margin-bottom: var(--em-6);
     background: var(--em-brand);
     clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
-form.login > table {
-    max-width: 480px;
-}
-form.login > table > tbody > tr > td:first-child + td:last-child {
+
+/* Flatten Revive's layout tables into a single column */
+form.login table,
+form.login tbody,
+form.login tr,
+form.login td {
     display: block;
-}
-form.login img[src*="login-welcome"],
-form.login img.break {
-    display: none;
-}
-form.login > table {
-    width: 100%;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0;
+    border: 0;
 }
 form.login > table > tbody > tr > td:first-child {
     display: none;
 }
-form.login > table > tbody > tr > td + td {
-    width: 100%;
+form.login img[src*="login-welcome"],
+form.login img.break,
+form.login br {
+    display: none;
 }
+
+/* Heading: Revive's own welcome line, so it follows the app name */
 form.login .tab-s {
     display: block;
-    margin-bottom: var(--em-1);
-    font-family: var(--em-font-sans);
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--em-brand-strong);
+    margin: 0 0 var(--em-2);
+    font-family: var(--em-font-display);
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--em-ink);
 }
 form.login .install {
+    display: block;
     color: var(--em-ink-muted);
 }
+
+/* Fields */
 form.login table table {
-    width: 100%;
-    margin-top: var(--em-6);
-}
-form.login table table tr {
-    height: auto;
+    margin-top: var(--em-8);
 }
 form.login table table td {
-    display: block;
-    padding: 0;
+    font-size: 13px;
     font-weight: 700;
 }
 form.login table table td + td {
-    margin: var(--em-2) 0 var(--em-4);
+    margin: var(--em-2) 0 var(--em-6);
+}
+form.login table table tr:last-child td:first-child {
+    display: none;
+}
+form.login table table tr:last-child td + td {
+    margin: var(--em-2) 0 0;
 }
 form.login input.flat {
     width: 100%;
     min-height: 48px;
     font-size: 16px;
 }
+form.login input.flat:focus-visible {
+    border-color: var(--em-black);
+}
 form.login input[type="submit"] {
     width: 100%;
-    min-height: 56px;
+    min-height: 52px;
     background: var(--em-brand);
     color: var(--em-white);
     font-family: var(--em-font-display);
-    font-size: 20px;
+    font-size: 19px;
 }
 form.login input[type="submit"]:hover {
     background: var(--em-black);
 }
-form.login a {
-    display: inline-block;
-    margin-top: var(--em-4);
+
+/* Forgot password: centred under a hairline */
+form.login > table > tbody > tr:last-child > td:last-child > a {
+    display: block;
+    margin-top: var(--em-6);
+    padding-top: var(--em-6);
+    border-top: var(--em-hairline);
+    text-align: center;
+    font-size: 13px;
     font-weight: 700;
+    color: var(--em-ink-muted);
+    text-decoration: none;
+}
+form.login > table > tbody > tr:last-child > td:last-child > a:hover {
+    color: var(--em-brand-strong);
+}
+
+/* Login error: inside the card, word plus rule, never colour alone */
+form.login .errormessage {
+    width: auto !important;
+    margin-top: var(--em-6);
+    padding: var(--em-3) var(--em-4);
+    background: var(--em-surface-raised);
+    border: 0;
+    border-top: 2px solid var(--em-danger);
+    font-size: 14px;
+    line-height: 20px;
+}
+form.login .errormessage img {
+    display: none;
+}
+form.login .errormessage .tab-r {
+    color: var(--em-danger);
+    font-weight: 500;
 }
 
 /* ================================================================
@@ -1097,15 +1140,11 @@ form.login a {
     .tableWrapper table {
         min-width: 640px;
     }
+    body:has(form.login) #firstLevelContent {
+        align-items: flex-start;
+        padding: var(--em-6) var(--em-4);
+    }
     form.login {
-        margin: var(--em-8) var(--em-gutter);
-    }
-    form.login::before {
-        font-size: 40px;
-        line-height: 44px;
-    }
-    form.login::after {
-        width: 64px;
-        height: 70px;
+        padding: var(--em-8) var(--em-6) var(--em-6);
     }
 }
