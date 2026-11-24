@@ -1,0 +1,1150 @@
+/*
+ * EljayMedia Admin Theme for Revive Adserver: Swiss edition
+ * ---------------------------------------------------------
+ * A pure override layer loaded after Revive's own stylesheets by the
+ * emAdminTheme plugin. Nothing in Revive core is edited, so upgrades
+ * replace core CSS underneath and this file keeps applying on top.
+ *
+ * Principles (International Typographic Style, in EljayMedia colours):
+ *  - One grid: 8px rhythm, flush-left, ragged-right text.
+ *  - Structure comes from rules and whitespace, not boxes or shadows.
+ *    Heavy 2px black rules open a section; 1px hairlines divide rows.
+ *  - Type does the hierarchy: big heavy Poppins titles, small uppercase
+ *    labels, DM Sans for everything else. Numbers are tabular.
+ *  - Black and white do the work; magenta is the single accent
+ *    (active state, primary action, focus of attention).
+ *  - Square structure, soft controls: containers are square; buttons
+ *    and inputs keep the brand's soft radii.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap");
+
+:root {
+    --em-brand: #ed1568;
+    --em-brand-strong: #c40e55;
+    --em-brand-tint: #fde7ef;
+    --em-brand-strong-dark: #ff4d8d;
+    --em-black: #000000;
+    --em-white: #ffffff;
+    --em-surface: #ffffff;
+    --em-surface-raised: #f4f4f4;
+    --em-raised-dark: #141414;
+    --em-ink: #000000;
+    --em-ink-muted: #5c5c5c;
+    --em-ink-muted-dark: #a3a3a3;
+    --em-border: #e0e0e0;
+    --em-border-dark: #2a2a2a;
+    --em-border-strong: #8a8a8a;
+    --em-success: #0f766e;
+    --em-warning: #a15c00;
+    --em-danger: #b91c1c;
+    --em-info: #1d4ed8;
+
+    --em-font-display: Poppins, "Arial Black", system-ui, sans-serif;
+    --em-font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    /* 8px grid */
+    --em-1: 4px;
+    --em-2: 8px;
+    --em-3: 12px;
+    --em-4: 16px;
+    --em-6: 24px;
+    --em-8: 32px;
+    --em-12: 48px;
+    --em-16: 64px;
+
+    --em-radius-sm: 6px;
+    --em-radius-md: 12px;
+
+    --em-rule: 2px solid var(--em-black);
+    --em-hairline: 1px solid var(--em-border);
+
+    --em-header-h: 64px;
+    --em-nav-h: 48px;
+    --em-sidebar-w: 224px;
+    --em-gutter: 32px;
+}
+
+/* ================================================================
+   Base
+   ================================================================ */
+
+body,
+body table, body td, body th,
+body select, body textarea, body input, body button {
+    font-family: var(--em-font-sans);
+    font-size: 14px;
+    color: var(--em-ink);
+}
+
+body {
+    background: var(--em-surface);
+    line-height: 20px;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 0;
+}
+
+a {
+    color: var(--em-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--em-border-strong);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+}
+a:hover {
+    color: var(--em-brand-strong);
+    text-decoration-color: var(--em-brand-strong);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--em-black);
+    outline-offset: 2px;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--em-font-display);
+    color: var(--em-ink);
+    letter-spacing: -0.01em;
+}
+
+::selection {
+    background: var(--em-brand);
+    color: var(--em-black);
+}
+
+/* ================================================================
+   Header: black bar, logo flush to the grid's left edge
+   ================================================================ */
+
+#oaHeader {
+    height: var(--em-header-h);
+    background: var(--em-black) !important;
+}
+
+#oaHeaderBranding,
+#oaHeaderBranding.brandingAdServer,
+#oaHeaderBranding.brandingName,
+#oaHeaderBranding.brandingCustom {
+    top: 0;
+    left: var(--em-gutter);
+    width: 168px;
+    height: var(--em-header-h);
+    margin: 0;
+    padding: 0;
+    background: url(../images/logo-white.png) left center / 168px auto no-repeat;
+    text-indent: -9999px;
+    overflow: hidden;
+    color: transparent;
+}
+#oaHeaderBranding img,
+#oaHeaderBranding div {
+    display: none;
+}
+
+#oaNavigationExtraTop {
+    padding: 0 var(--em-gutter) 0 0;
+    height: var(--em-header-h);
+    line-height: var(--em-header-h);
+    color: var(--em-ink-muted-dark);
+    font-size: 13px;
+}
+#oaNavigationExtraTop.hasSearch {
+    padding-right: calc(var(--em-gutter) + 280px + var(--em-6));
+}
+#oaNavigationExtraTop li {
+    padding: 0 0 0 var(--em-6);
+}
+#oaNavigationExtraTop li.infoUser,
+#oaNavigationExtraTop li.buttonHelp,
+#oaNavigationExtraTop li.buttonSupport {
+    border-right: 0;
+}
+#oaNavigationExtraTop a {
+    color: var(--em-white);
+    font-weight: 700;
+    text-decoration: none;
+}
+#oaNavigationExtraTop a:hover {
+    color: var(--em-brand-strong-dark);
+}
+#oaNavigationExtraTop a:focus-visible {
+    outline-color: var(--em-white);
+}
+
+/* Search: a single hairline field, no box chrome */
+#oaSearch {
+    top: 12px;
+    right: var(--em-gutter);
+    width: 280px;
+    height: 40px;
+    background: var(--em-raised-dark);
+    border: 1px solid var(--em-border-dark);
+    border-radius: var(--em-radius-sm);
+    box-sizing: border-box;
+}
+#oaSearch input.search {
+    position: absolute;
+    left: var(--em-3);
+    top: 0;
+    width: 220px;
+    min-height: 0;
+    height: 38px;
+    padding: 0;
+    border: 0;
+    line-height: 38px;
+    color: var(--em-white);
+    font-size: 14px;
+    background: none;
+}
+#oaSearch input.search::placeholder {
+    color: var(--em-ink-muted-dark);
+}
+#oaSearch input.search:focus-visible {
+    outline: none;
+}
+#oaSearch:focus-within {
+    outline: 2px solid var(--em-white);
+    outline-offset: 2px;
+}
+#oaSearch input.submit,
+#oaSearch input.submit:hover,
+#oaSearch input.submit:focus {
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    top: 9px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") center / 18px no-repeat;
+}
+
+/* ================================================================
+   Main navigation: typographic tabs, magenta underline marks the
+   current section
+   ================================================================ */
+
+#oaNavigation {
+    top: 0;
+    height: var(--em-nav-h);
+    background: var(--em-black);
+    border-top: 1px solid var(--em-border-dark);
+    border-bottom: 0;
+}
+
+#oaNavigationTabs {
+    top: 0;
+    left: var(--em-gutter);
+    height: var(--em-nav-h);
+    line-height: var(--em-nav-h);
+    display: flex;
+    gap: var(--em-8);
+}
+#oaNavigationTabs *,
+#oaNavigationTabs li,
+#oaNavigationTabs li div,
+#oaNavigationTabs li div.left,
+#oaNavigationTabs li div.right,
+#oaNavigationTabs li.first div.left,
+#oaNavigationTabs li.last div.right {
+    height: var(--em-nav-h);
+    background: none !important;
+}
+#oaNavigationTabs li {
+    float: none;
+}
+#oaNavigationTabs li span,
+#oaNavigationTabs li a,
+#oaNavigationTabs li.last span,
+#oaNavigationTabs li.last a {
+    float: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--em-ink-muted-dark) !important;
+    background: none !important;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+}
+#oaNavigationTabs li a:hover {
+    color: var(--em-white) !important;
+}
+#oaNavigationTabs li.active a,
+#oaNavigationTabs li.active span {
+    color: var(--em-white) !important;
+    font-weight: 700;
+    border-bottom-color: var(--em-brand);
+}
+#oaNavigationTabs li a:focus-visible {
+    outline-color: var(--em-white);
+    outline-offset: -2px;
+}
+
+/* Account switcher ("Working as") */
+#oaNavigationExtra {
+    top: 0;
+    right: var(--em-gutter);
+    height: var(--em-nav-h);
+    display: flex;
+    align-items: center;
+    color: var(--em-ink-muted-dark);
+    line-height: 20px;
+}
+#oaNavigationExtra a {
+    color: var(--em-ink-muted-dark);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+#oaNavigationExtra a:hover {
+    color: var(--em-white);
+}
+#oaNavigationExtra .triggerContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: var(--em-2);
+    max-width: 360px;
+}
+#oaNavigationExtra .switchTrigger {
+    top: 0;
+    height: 20px;
+    max-width: 220px;
+    color: var(--em-white);
+    font-weight: 700;
+}
+
+/* ================================================================
+   Page frame: one left gutter, sidebar column, content column
+   ================================================================ */
+
+#firstLevelContent,
+body.hasGradient #firstLevelContent {
+    margin-top: 0;
+    background: var(--em-surface);
+}
+
+.hasGradient #secondLevelContent {
+    padding: var(--em-8) var(--em-gutter) var(--em-16);
+}
+.hasSidebar #secondLevelContent {
+    margin-left: calc(var(--em-gutter) + var(--em-sidebar-w) + var(--em-8));
+    padding-left: 0;
+}
+
+/* ================================================================
+   Sidebar: a plain typographic index, hairline between groups,
+   a magenta bar marks where you are
+   ================================================================ */
+
+#secondLevelNavigation {
+    width: var(--em-sidebar-w);
+    margin: var(--em-8) 0 0 var(--em-gutter);
+}
+#secondLevelNavigation .navigation {
+    width: var(--em-sidebar-w);
+    margin: 0 0 var(--em-4);
+    padding: var(--em-4) 0 0;
+    background: none;
+    border-top: var(--em-hairline);
+}
+#secondLevelNavigation .navigation.first {
+    border-top: var(--em-rule);
+}
+#secondLevelNavigation .navigation li,
+#secondLevelNavigation .navigation li.active {
+    background: none;
+    margin: 0;
+}
+#secondLevelNavigation .navigation li a,
+#secondLevelNavigation .navigation li.last a {
+    position: relative;
+    display: block;
+    padding: var(--em-2) 0 var(--em-2) var(--em-4);
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--em-ink);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-decoration: none;
+}
+#secondLevelNavigation .navigation li a:hover {
+    color: var(--em-brand-strong);
+}
+#secondLevelNavigation .navigation li.active > a,
+#secondLevelNavigation .navigation li.active a {
+    background: none;
+    color: var(--em-ink);
+    font-weight: 700;
+}
+#secondLevelNavigation .navigation li.active > a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: var(--em-2);
+    bottom: var(--em-2);
+    width: 3px;
+    background: var(--em-brand);
+}
+#secondLevelNavigation .navigation li .top,
+#secondLevelNavigation .navigation li .bottom {
+    display: none;
+}
+/* Sub-items: indented one grid step, smaller and muted */
+#secondLevelNavigation .navigation li.active ul,
+#secondLevelNavigation .navigation .navigation {
+    width: auto;
+    margin: 0 0 var(--em-2) var(--em-4);
+    padding: 0;
+    border: 0;
+    background: none;
+}
+#secondLevelNavigation .navigation li.active ul li a {
+    padding: 6px 0 6px var(--em-4);
+    border: 0;
+    background: none;
+    color: var(--em-ink-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+#secondLevelNavigation .navigation li.active ul li a:hover {
+    color: var(--em-brand-strong);
+}
+#secondLevelNavigation .navigation li.active ul li.active a {
+    color: var(--em-ink);
+    font-weight: 700;
+}
+#secondLevelNavigation .navigation li.active ul li.active a::before {
+    top: 6px;
+    bottom: 6px;
+}
+
+/* Sidebar notifications */
+.notificationPlaceholder .panel {
+    border-radius: 0;
+}
+
+/* ================================================================
+   Page header: eyebrow label + large title, set flush-left
+   ================================================================ */
+
+#thirdLevelHeader,
+#thirdLevelHeader.hasTabs {
+    height: auto;
+    min-height: 0;
+    border: 0;
+    border-top: var(--em-rule);
+    background: none;
+    padding: var(--em-4) 0 0;
+}
+#thirdLevelHeader .corner {
+    display: none;
+}
+#thirdLevelHeader div.breadcrumb,
+#thirdLevelHeader div.breadcrumb.hasIcon {
+    margin: 0;
+    padding: 0 0 var(--em-6);
+    min-height: 0;
+    background-image: none !important;
+}
+#thirdLevelHeader div.breadcrumb .titleIcon {
+    display: none;
+}
+#thirdLevelHeader div.breadcrumb h3,
+#thirdLevelHeader div.breadcrumb h3.noBreadcrumb {
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+    margin: 0;
+    font-family: var(--em-font-display);
+    font-size: 40px;
+    line-height: 44px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--em-ink);
+}
+#thirdLevelHeader div.breadcrumb h3 .label {
+    display: block;
+    margin-bottom: var(--em-2);
+    font-family: var(--em-font-sans);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--em-brand-strong);
+}
+#thirdLevelHeader div.breadcrumb h3 span.target {
+    display: block;
+    margin-top: var(--em-2);
+    font-family: var(--em-font-sans);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--em-ink-muted);
+}
+
+/* Breadcrumb trail: small, muted, separated by slashes */
+#thirdLevelHeader .entityLinks {
+    display: block;
+    margin-top: var(--em-3);
+    font-size: 13px;
+    color: var(--em-ink-muted);
+}
+#thirdLevelHeader .entityLinks .ent,
+#thirdLevelHeader .entityList .ent {
+    padding-left: 0;
+    background-image: none !important;
+    color: var(--em-ink-muted);
+}
+#thirdLevelHeader .entityLinks a.ent:hover {
+    color: var(--em-brand-strong);
+}
+#thirdLevelHeader span.sep {
+    font-size: 0;
+    padding: 0 var(--em-2);
+}
+#thirdLevelHeader span.sep::after {
+    content: "/";
+    font-size: 13px;
+    color: var(--em-border-strong);
+}
+
+/* Section tabs: same typographic language as the main navigation */
+#thirdLevelNavigation {
+    position: relative;
+    margin: 0;
+    border-bottom: var(--em-hairline);
+}
+#thirdLevelNavigation .navigation {
+    display: flex;
+    gap: var(--em-8);
+    height: auto;
+    line-height: 20px;
+    overflow-x: auto;
+}
+#thirdLevelNavigation li,
+#thirdLevelNavigation li div,
+#thirdLevelNavigation li div.left,
+#thirdLevelNavigation li div.right,
+#thirdLevelNavigation li.first div.left,
+#thirdLevelNavigation li.last div.right {
+    float: none;
+    background: none !important;
+}
+#thirdLevelNavigation li span,
+#thirdLevelNavigation li a,
+#thirdLevelNavigation li.last span,
+#thirdLevelNavigation li.last a {
+    float: none;
+    padding: var(--em-3) 0;
+    margin-bottom: -1px;
+    font-size: 14px;
+    color: var(--em-ink-muted);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+}
+#thirdLevelNavigation li a:hover {
+    color: var(--em-ink);
+}
+#thirdLevelNavigation li.active span,
+#thirdLevelNavigation li.active a {
+    color: var(--em-ink);
+    font-weight: 700;
+    border-bottom-color: var(--em-brand);
+}
+
+#thirdLevelContent {
+    padding: var(--em-8) 0 0;
+    border: 0;
+}
+
+/* Actions / shortcuts toolbar */
+#thirdLevelTools {
+    min-height: 0;
+    margin-bottom: var(--em-4);
+}
+#thirdLevelTools a.buttonLink {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* ================================================================
+   Tables: no boxes. A heavy rule opens the table, hairlines
+   divide rows, numbers line up.
+   ================================================================ */
+
+.tableWrapper {
+    border: 0;
+    border-radius: 0;
+    background: var(--em-surface);
+}
+.tableWrapper .tableHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--em-4);
+    padding: 0 0 var(--em-4);
+    background: none;
+    border: 0;
+}
+.tableWrapper .tableHeader .corner,
+.tableWrapper .tableHeader .clear {
+    display: none;
+}
+.tableWrapper .tableActions,
+.tableWrapper .tableFilters {
+    margin: 0;
+}
+.tableWrapper .tableActions li,
+.tableWrapper .tableFilters li {
+    margin-right: var(--em-6);
+}
+
+/* Toolbar actions read as text buttons with a + mark, no clip-art */
+.tableWrapper .tableActions li a,
+.tableWrapper .tableActions li span {
+    padding-left: 0;
+    background-image: none !important;
+    font-weight: 700;
+    text-decoration: none;
+}
+.tableWrapper .tableActions li a {
+    color: var(--em-brand-strong);
+}
+.tableWrapper .tableActions li a:hover {
+    color: var(--em-black);
+}
+.tableWrapper .tableActions li a[class*="Add"]::before {
+    content: "+";
+    display: inline-block;
+    margin-right: var(--em-2);
+    font-family: var(--em-font-display);
+    font-size: 18px;
+    line-height: 1;
+}
+.tableWrapper .tableActions li.inactive a,
+.tableWrapper .tableActions li span[class*="Disabled"] {
+    color: var(--em-border-strong);
+}
+
+.tableWrapper table {
+    border-collapse: collapse;
+    border-top: var(--em-rule);
+}
+.tableWrapper table th {
+    padding: var(--em-3) var(--em-4) var(--em-3) 0;
+    vertical-align: middle !important;
+    background: var(--em-surface);
+    border-bottom: var(--em-hairline);
+    color: var(--em-ink-muted);
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: left;
+}
+.tableWrapper table th a,
+.tableWrapper table th span {
+    color: var(--em-ink-muted);
+    text-decoration: none;
+}
+.tableWrapper table th.sortUp a,
+.tableWrapper table th.sortDown a,
+.tableWrapper table th.sortUp span,
+.tableWrapper table th.sortDown span {
+    color: var(--em-ink);
+}
+.tableWrapper table td {
+    padding: var(--em-3) var(--em-4) var(--em-3) 0;
+    border-bottom: var(--em-hairline);
+    background: var(--em-surface);
+    vertical-align: middle;
+}
+.tableWrapper table tr:hover td {
+    background: var(--em-surface-raised);
+}
+.tableWrapper table tr.selected td,
+.tableWrapper table tr.hilite td {
+    background: var(--em-brand-tint);
+}
+.tableWrapper table td a {
+    color: var(--em-ink);
+    font-weight: 700;
+    text-decoration: none;
+}
+.tableWrapper table td a:hover {
+    color: var(--em-brand-strong);
+    text-decoration: underline;
+}
+/* Strip the legacy entity clip-art; the column tells you the type */
+.tableWrapper table .inlineIcon {
+    padding-left: 0;
+    background-image: none !important;
+}
+.tableWrapper table .alignRight,
+.tableWrapper table td.alignRight,
+.tableWrapper table td {
+    font-variant-numeric: tabular-nums;
+}
+.tableWrapper table .alignRight,
+.tableWrapper table th.last,
+.tableWrapper table td.last {
+    padding-right: 0;
+}
+.tableWrapper table .toggleAll,
+.tableWrapper table .toggleSelection {
+    width: 32px;
+}
+
+/* Row actions (Edit, Delete…) appear as small muted text */
+.tableWrapper table .rowActions li a {
+    padding-left: 0;
+    background-image: none !important;
+    color: var(--em-ink-muted);
+    font-weight: 500;
+    font-size: 13px;
+}
+.tableWrapper table .rowActions li a:hover {
+    color: var(--em-brand-strong);
+}
+
+/* Generic legacy tables (stats, settings) */
+table.table,
+table.statsTable {
+    border-collapse: collapse;
+    border-top: var(--em-rule);
+}
+
+/* ================================================================
+   Forms: each section opens with a heavy rule and an uppercase
+   label; label column and field column on the grid
+   ================================================================ */
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="search"],
+input.flat,
+select,
+textarea {
+    box-sizing: border-box;
+    min-height: 40px;
+    padding: var(--em-2) var(--em-3);
+    border: 1px solid var(--em-border-strong);
+    border-radius: var(--em-radius-sm);
+    background-color: var(--em-surface);
+    color: var(--em-ink);
+    font-size: 14px;
+}
+input[type="text"]:hover,
+input[type="password"]:hover,
+input.flat:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--em-black);
+}
+textarea {
+    min-height: 96px;
+    line-height: 20px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--em-brand-strong);
+    width: 16px;
+    height: 16px;
+}
+
+/* Section header row: rule + label instead of spacer images */
+table.section {
+    margin-bottom: var(--em-8);
+    border-top: var(--em-rule);
+}
+table.section img[src*="break"],
+table.section img[src*="spacer"] {
+    display: none;
+}
+table.section > tbody > tr:first-child > td {
+    padding-top: var(--em-3);
+    height: auto !important;
+}
+table.section > tbody > tr:first-child b {
+    font-family: var(--em-font-sans);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--em-ink);
+}
+table.section > tbody > tr:first-child img {
+    display: none;
+}
+table.section td {
+    padding-top: var(--em-1);
+    padding-bottom: var(--em-1);
+}
+table.section td[height="10"],
+table.section td[height="25"] {
+    height: auto !important;
+}
+table.section tr:nth-child(3) td[height="10"] {
+    height: var(--em-2) !important;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+}
+table.section > tbody > tr:nth-child(2) {
+    display: none;
+}
+table.section td[width="170"] {
+    width: 200px;
+    min-width: 200px;
+    padding-right: var(--em-6);
+    color: var(--em-ink);
+    font-weight: 500;
+    vertical-align: top;
+    padding-top: 14px;
+}
+table.section td[width="30"] {
+    width: 0;
+    padding: 0;
+}
+table.section tr.spacer td {
+    height: var(--em-2) !important;
+    line-height: 0;
+    font-size: 0;
+}
+table.section font[color="red"],
+.controls span[style*="color: red"] {
+    color: var(--em-brand-strong) !important;
+}
+label.error,
+.errormessage,
+.panel.error p {
+    color: var(--em-danger);
+    font-weight: 500;
+}
+
+/* Buttons: magenta primary, black-outline secondary */
+input[type="submit"],
+input[type="button"],
+form button[type="submit"],
+.button {
+    min-height: 44px;
+    padding: 0 var(--em-6);
+    border: 0;
+    border-radius: var(--em-radius-md);
+    background: var(--em-brand-strong);
+    color: var(--em-white);
+    font-family: var(--em-font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+}
+input[type="submit"]:hover,
+input[type="button"]:hover,
+form button[type="submit"]:hover,
+.button:hover {
+    background: var(--em-black);
+}
+input[type="button"],
+input[type="reset"],
+input[type="button"].secondary {
+    background: var(--em-surface);
+    color: var(--em-black);
+    box-shadow: inset 0 0 0 1px var(--em-black);
+}
+input[type="button"]:hover,
+input[type="reset"]:hover {
+    background: var(--em-black);
+    color: var(--em-white);
+}
+
+/* Form controls row: sits on a hairline, buttons flush-left */
+.controls {
+    margin-top: var(--em-8);
+    padding-top: var(--em-6);
+    border-top: var(--em-hairline);
+}
+
+/* ================================================================
+   Messages: a coloured top rule + bold word, never colour alone
+   ================================================================ */
+
+div.message div.panel,
+div.message div.confirm,
+div.message div.info,
+div.message div.warning,
+div.message div.error,
+div.localMessage div.panel,
+div.formMessage div.panel {
+    width: auto;
+    max-width: 720px;
+    margin: 0 0 var(--em-6);
+    padding: var(--em-3) var(--em-4);
+    border: 0;
+    border-top: 2px solid var(--em-black);
+    border-radius: 0;
+    background: var(--em-surface-raised);
+    color: var(--em-ink);
+}
+div.message div.panel p {
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: var(--em-ink);
+}
+div.message div.panel a {
+    color: var(--em-ink);
+}
+div.message div.panel div.icon {
+    display: none;
+}
+div.message div.error {
+    border-top-color: var(--em-danger);
+}
+div.message div.confirm {
+    border-top-color: var(--em-success);
+}
+div.message div.warning {
+    border-top-color: var(--em-warning);
+}
+div.message div.info {
+    border-top-color: var(--em-info);
+}
+.message .panel .topleft,
+.message .panel .topright,
+.message .panel .bottomleft,
+.message .panel .bottomright {
+    display: none;
+}
+
+/* ================================================================
+   Sign-in: one contained card, centred in the window
+   ================================================================ */
+
+body:has(form.login),
+body:has(form.login) #firstLevelContent {
+    background: var(--em-surface-raised);
+}
+body:has(form.login) #oaNavigation,
+body:has(form.login) #oaSearch {
+    display: none;
+}
+body:has(form.login) #oaNavigationExtraTop.hasSearch {
+    padding-right: var(--em-gutter);
+}
+body:has(form.login) #firstLevelContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--em-header-h));
+    padding: var(--em-12) var(--em-4);
+    box-sizing: border-box;
+}
+body:has(form.login) #secondLevelContent {
+    width: 100%;
+    max-width: 420px;
+    margin: 0;
+    padding: 0;
+}
+
+form.login {
+    position: relative;
+    margin: 0;
+    padding: var(--em-12) var(--em-8) var(--em-8);
+    background: var(--em-surface);
+    border: var(--em-hairline);
+    border-top: 4px solid var(--em-black);
+}
+/* Brand mark: the play-triangle, small, set on the card's grid */
+form.login::before {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 24px;
+    margin-bottom: var(--em-6);
+    background: var(--em-brand);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* Flatten Revive's layout tables into a single column */
+form.login table,
+form.login tbody,
+form.login tr,
+form.login td {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0;
+    border: 0;
+}
+form.login > table > tbody > tr > td:first-child {
+    display: none;
+}
+form.login img[src*="login-welcome"],
+form.login img.break,
+form.login br {
+    display: none;
+}
+
+/* Heading: Revive's own welcome line, so it follows the app name */
+form.login .tab-s {
+    display: block;
+    margin: 0 0 var(--em-2);
+    font-family: var(--em-font-display);
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--em-ink);
+}
+form.login .install {
+    display: block;
+    color: var(--em-ink-muted);
+}
+
+/* Fields */
+form.login table table {
+    margin-top: var(--em-8);
+}
+form.login table table td {
+    font-size: 13px;
+    font-weight: 700;
+}
+form.login table table td + td {
+    margin: var(--em-2) 0 var(--em-6);
+}
+form.login table table tr:last-child td:first-child {
+    display: none;
+}
+form.login table table tr:last-child td + td {
+    margin: var(--em-2) 0 0;
+}
+form.login input.flat {
+    width: 100%;
+    min-height: 48px;
+    font-size: 16px;
+}
+form.login input.flat:focus-visible {
+    border-color: var(--em-black);
+}
+form.login input[type="submit"] {
+    width: 100%;
+    min-height: 52px;
+    background: var(--em-brand);
+    color: var(--em-white);
+    font-family: var(--em-font-display);
+    font-size: 19px;
+}
+form.login input[type="submit"]:hover {
+    background: var(--em-black);
+}
+
+/* Forgot password: centred under a hairline */
+form.login > table > tbody > tr:last-child > td:last-child > a {
+    display: block;
+    margin-top: var(--em-6);
+    padding-top: var(--em-6);
+    border-top: var(--em-hairline);
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--em-ink-muted);
+    text-decoration: none;
+}
+form.login > table > tbody > tr:last-child > td:last-child > a:hover {
+    color: var(--em-brand-strong);
+}
+
+/* Login error: inside the card, word plus rule, never colour alone */
+form.login .errormessage {
+    width: auto !important;
+    margin-top: var(--em-6);
+    padding: var(--em-3) var(--em-4);
+    background: var(--em-surface-raised);
+    border: 0;
+    border-top: 2px solid var(--em-danger);
+    font-size: 14px;
+    line-height: 20px;
+}
+form.login .errormessage img {
+    display: none;
+}
+form.login .errormessage .tab-r {
+    color: var(--em-danger);
+    font-weight: 500;
+}
+
+/* ================================================================
+   Narrow screens
+   ================================================================ */
+
+@media (max-width: 900px) {
+    :root {
+        --em-gutter: 16px;
+    }
+    body.hasInterface {
+        min-width: 0;
+    }
+    #oaNavigationExtraTop.hasSearch {
+        padding-right: var(--em-gutter);
+    }
+    #oaSearch,
+    #oaNavigationExtra,
+    #oaNavigationExtraTop li.infoUser {
+        display: none;
+    }
+    #oaNavigationTabs {
+        right: var(--em-gutter);
+        gap: var(--em-6);
+        overflow-x: auto;
+    }
+    #secondLevelNavigation {
+        position: static;
+        width: auto;
+        margin: var(--em-6) var(--em-gutter) 0;
+    }
+    #secondLevelNavigation .navigation {
+        width: auto;
+    }
+    .hasSidebar #secondLevelContent {
+        margin-left: 0;
+    }
+    .hasGradient #secondLevelContent {
+        padding: var(--em-6) var(--em-gutter) var(--em-12);
+    }
+    #thirdLevelHeader div.breadcrumb h3 {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    .tableWrapper {
+        overflow-x: auto;
+    }
+    .tableWrapper table {
+        min-width: 640px;
+    }
+    body:has(form.login) #firstLevelContent {
+        align-items: flex-start;
+        padding: var(--em-6) var(--em-4);
+    }
+    form.login {
+        padding: var(--em-8) var(--em-6) var(--em-6);
+    }
+}
