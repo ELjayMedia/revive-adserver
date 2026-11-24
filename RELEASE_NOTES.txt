@@ -17,9 +17,13 @@ Revive Adserver. Please read these notes before reporting any bugs.
 What's New in Revive Adserver 6.0.9
 -----------------------------------
 
- * Release date: t.b.d.
+ * Release date: 11 November 2026
 
-This version brings...
+This security-only release fixes 14 vulnerabilities, including SQL injection,
+authorization bypasses, cross-site scripting and cross-site request forgery.
+
+For details, please see the security advisory:
+https://www.revive-adserver.com/security/revive-sa-2026-004/
 
 For a detailed change log, please see: CHANGELOG.md
 

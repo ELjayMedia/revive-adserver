@@ -160,9 +160,9 @@ class Plugins_InvocationTagsOptions
         $option .= "<tr><td width='30'>&nbsp;</td>";
         $option .= "<td width='200'>" . $GLOBALS['strInvocationBannerID'] . "</td><td width='370'>";
         if ($codetype == 'adviewnocookies') {
-            $option .= "<input onBlur='max_formValidateElement(this);' class='flat' type='text' name='bannerid' value='" . ($maxInvocation->bannerid ?? '') . "' style='width: 175px;' tabindex='" . ($maxInvocation->tabindex++) . "'></td></tr>";
+            $option .= "<input onBlur='max_formValidateElement(this);' class='flat' type='text' name='bannerid' value='" . htmlspecialchars($maxInvocation->bannerid ?? '', ENT_QUOTES) . "' style='width: 175px;' tabindex='" . ($maxInvocation->tabindex++) . "'></td></tr>";
         } else {
-            $option .= "<input class='flat' type='text' name='bannerid' size='' value='" . ($maxInvocation->bannerid ?? '') . "' style='width:175px;' tabindex='" . ($maxInvocation->tabindex++) . "'></td></tr>";
+            $option .= "<input class='flat' type='text' name='bannerid' size='' value='" . htmlspecialchars($maxInvocation->bannerid ?? '', ENT_QUOTES) . "' style='width:175px;' tabindex='" . ($maxInvocation->tabindex++) . "'></td></tr>";
         }
         $option .= "<tr><td width='30'><img src='" . OX::assetPath() . "/images/spacer.gif' height='5' width='100%'></td></tr>";
         return $option;
@@ -257,8 +257,8 @@ class Plugins_InvocationTagsOptions
         if (!$maxInvocation->zone_invocation || ($maxInvocation->width == -1 || $maxInvocation->height == -1)) {
             $option .= "<tr><td width='30'>&nbsp;</td>";
             $option .= "<td width='200'>" . $GLOBALS['strFrameSize'] . "</td><td width='370'>";
-            $option .= $GLOBALS['strWidth'] . ": <input class='flat' type='text' name='frame_width' size='3' value='" . ((isset($maxInvocation->frame_width) && $maxInvocation->frame_width > 0) ? $maxInvocation->frame_width : '') . "' tabindex='" . ($maxInvocation->tabindex++) . "'>&nbsp;&nbsp;&nbsp;";
-            $option .= $GLOBALS['strHeight'] . ": <input class='flat' type='text' name='frame_height' size='3' value='" . ((isset($maxInvocation->frame_height) && $maxInvocation->frame_height > 0) ? $maxInvocation->frame_height : '') . "' tabindex='" . ($maxInvocation->tabindex++) . "'>";
+            $option .= $GLOBALS['strWidth'] . ": <input class='flat' type='text' name='frame_width' size='3' value='" . htmlspecialchars((isset($maxInvocation->frame_width) && $maxInvocation->frame_width > 0) ? $maxInvocation->frame_width : '', ENT_QUOTES) . "' tabindex='" . ($maxInvocation->tabindex++) . "'>&nbsp;&nbsp;&nbsp;";
+            $option .= $GLOBALS['strHeight'] . ": <input class='flat' type='text' name='frame_height' size='3' value='" . htmlspecialchars((isset($maxInvocation->frame_height) && $maxInvocation->frame_height > 0) ? $maxInvocation->frame_height : '', ENT_QUOTES) . "' tabindex='" . ($maxInvocation->tabindex++) . "'>";
             $option .= "</td></tr>";
             $option .= "<tr><td width='30'><img src='" . OX::assetPath() . "/images/spacer.gif' height='5' width='100%'></td></tr>";
         }
@@ -389,7 +389,7 @@ class Plugins_InvocationTagsOptions
              (isset($maxInvocation->delay_type) && $maxInvocation->delay_type == 'exit' ? ' checked' : '') . " tabindex='" . ($maxInvocation->tabindex++) . "'>&nbsp;" . $GLOBALS['strPopUpOnClose'] . "<br />";
         $option .= "<input type='radio' name='delay_type' value='seconds'" .
              (isset($maxInvocation->delay_type) && $maxInvocation->delay_type == 'seconds' ? ' checked' : '') . " tabindex='" . ($maxInvocation->tabindex++) . "'>&nbsp;" . $GLOBALS['strPopUpAfterSec'] . "&nbsp;" .
-             "<input class='flat' type='text' name='delay' size='' value='" . ($maxInvocation->delay ?? $this->defaultValues['delay']) . "' style='width:50px;' tabindex='" . ($tabindex++) . "'> " . $GLOBALS['strAbbrSeconds'] . "</td>";
+             "<input class='flat' type='text' name='delay' size='' value='" . htmlspecialchars($maxInvocation->delay ?? $this->defaultValues['delay'], ENT_QUOTES) . "' style='width:50px;' tabindex='" . ($tabindex++) . "'> " . $GLOBALS['strAbbrSeconds'] . "</td>";
         $option .= "</tr>";
         $option .= "<tr><td width='30'><img src='" . OX::assetPath() . "/images/spacer.gif' height='5' width='100%'></td></tr>";
         return $option;
@@ -407,10 +407,10 @@ class Plugins_InvocationTagsOptions
         $option = '';
         $option .= "<tr><td width='30'>&nbsp;</td>";
         $option .= "<td width='200'>" . $GLOBALS['strPopUpTop'] . "</td><td width='370'>";
-        $option .= "<input class='flat' type='text' name='top' size='' value='" . ($maxInvocation->top ?? $this->defaultValues['absolute']['top']) . "' style='width:50px;' tabindex='" . ($maxInvocation->tabindex++) . "'> " . $GLOBALS['strAbbrPixels'] . "</td></tr>";
+        $option .= "<input class='flat' type='text' name='top' size='' value='" . htmlspecialchars($maxInvocation->top ?? $this->defaultValues['absolute']['top'], ENT_QUOTES) . "' style='width:50px;' tabindex='" . ($maxInvocation->tabindex++) . "'> " . $GLOBALS['strAbbrPixels'] . "</td></tr>";
         $option .= "<tr><td width='30'>&nbsp;</td>";
         $option .= "<td width='200'>" . $GLOBALS['strPopUpLeft'] . "</td><td width='370'>";
-        $option .= "<input class='flat' type='text' name='left' size='' value='" . ($maxInvocation->left ?? $this->defaultValues['absolute']['left']) . "' style='width:50px;' tabindex='" . ($maxInvocation->tabindex++) . "'> " . $GLOBALS['strAbbrPixels'] . "</td></tr>";
+        $option .= "<input class='flat' type='text' name='left' size='' value='" . htmlspecialchars($maxInvocation->left ?? $this->defaultValues['absolute']['left'], ENT_QUOTES) . "' style='width:50px;' tabindex='" . ($maxInvocation->tabindex++) . "'> " . $GLOBALS['strAbbrPixels'] . "</td></tr>";
         $option .= "<tr><td width='30'><img src='" . OX::assetPath() . "/images/spacer.gif' height='5' width='100%'></td></tr>";
         return $option;
     }
@@ -427,7 +427,7 @@ class Plugins_InvocationTagsOptions
         $option = '';
         $option .= "<tr><td width='30'>&nbsp;</td>";
         $option .= "<td width='200'>" . $GLOBALS['strAutoCloseAfter'] . "</td><td width='370'>";
-        $option .= "<input class='flat' type='text' name='timeout' size='' value='" . ($maxInvocation->timeout ?? $this->defaultValues['timeout']) . "' style='width:50px;' tabindex='" . ($maxInvocation->tabindex++) . "'> " . $GLOBALS['strAbbrSeconds'] . "</td></tr>";
+        $option .= "<input class='flat' type='text' name='timeout' size='' value='" . htmlspecialchars($maxInvocation->timeout ?? $this->defaultValues['timeout'], ENT_QUOTES) . "' style='width:50px;' tabindex='" . ($maxInvocation->tabindex++) . "'> " . $GLOBALS['strAbbrSeconds'] . "</td></tr>";
         $option .= "<tr><td width='30'><img src='" . OX::assetPath() . "/images/spacer.gif' height='5' width='100%'></td></tr>";
         return $option;
     }

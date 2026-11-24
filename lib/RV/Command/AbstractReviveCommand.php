@@ -19,7 +19,6 @@ abstract class AbstractReviveCommand extends Command
     public static function registerCommands(Application $application)
     {
         foreach (self::getCommandFiles() as $file) {
-            /** @var \ReflectionClass<AbstractReviveCommand> $reflection */
             $reflection = new \ReflectionClass(self::getClassName($file));
 
             if ($reflection->isAbstract() || $reflection->isSubclassOf(AbstractInstallerCommand::class)) {
@@ -53,16 +52,12 @@ abstract class AbstractReviveCommand extends Command
     {
         global $argc, $argv, $conf;
 
-        $hostname = $input->getOption('hostname');
-
-        if (null !== $hostname && !file_exists(__DIR__ . "/../../../var/{$hostname}.conf.php")) {
-            throw new \RuntimeException("Configuration file not found: {$hostname}.conf.php");
-        }
+        $hostname = $input->getOption('hostname') ?? $this->getDefaultHostname($output);
 
         $argc = 1;
         $argv = [
             $argv[0],
-            $hostname ?? $this->getDefaultHostname($output),
+            $hostname,
         ];
 
         $_SERVER['REQUEST_URI'] = '/';
